@@ -4,6 +4,7 @@ import (
 	"errors"
 	"image"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/disintegration/imaging"
@@ -48,64 +49,60 @@ func (this *ImageGenerator) PreGenerate(imagePath string) error {
 
 func (this *ImageGenerator) Generate() error {
 
-	src := imaging.Resize(this.Img, 1024, 1024, imaging.Lanczos)
-	err := imaging.Save(src, this.Dir+"/icon-1024"+this.Ext)
+	err := this.resize(20)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 120, 120, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-60@2x"+this.Ext)
-	err = imaging.Save(src, this.Dir+"/Icon-Small-40@3x"+this.Ext)
+	err = this.resize(29)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 180, 180, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-60@3x"+this.Ext)
+	err = this.resize(40)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 76, 76, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-76"+this.Ext)
+	err = this.resize(58)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 152, 152, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-152"+this.Ext)
+	err = this.resize(76)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 167, 167, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-83.5@2x"+this.Ext)
+	err = this.resize(80)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 40, 40, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-Small-40"+this.Ext)
+	err = this.resize(87)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 80, 80, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-Small-40@2x"+this.Ext)
+	err = this.resize(120)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 120, 120, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-Small-40@3x"+this.Ext)
+	err = this.resize(152)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 29, 29, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-29"+this.Ext)
+	err = this.resize(167)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 58, 58, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-58"+this.Ext)
+	err = this.resize(180)
 	if err != nil {
 		return err
 	}
-	src = imaging.Resize(this.Img, 87, 87, imaging.Lanczos)
-	err = imaging.Save(src, this.Dir+"/Icon-87"+this.Ext)
+	err = this.resize(1024)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (this *ImageGenerator) resize(size int) error {
+	src := imaging.Resize(this.Img, size, size, imaging.Lanczos)
+	err := imaging.Save(src, this.Dir+"/Icon-"+strconv.Itoa(size)+this.Ext)
 	if err != nil {
 		return err
 	}
